@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  serviceDonne:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: tanguy
+      MYSQL_PASSWORD: 1234
+
+    myadmin:
+      image: phpmyadmin
+      links:
+        - serviceDonne
+      ports:
+        - 8000:80
+      environment:
+        MYSQL_USER: tanguy
+        MYSQL_PASSWORD: 1234
+
+    websever:
+      build: ./
+      links:
+        - serviceDonne
+      ports:
+        - 80:80
